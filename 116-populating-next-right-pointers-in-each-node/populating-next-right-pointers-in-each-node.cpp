@@ -20,23 +20,17 @@ class Solution {
 public:
     Node* connect(Node* root) {
         if(!root) return nullptr;
-        queue<Node*> q;
-        q.push(root);
-        while(!q.empty()){
-            int s = q.size();
-            Node *x;
-            for(int i = 0; i < s -1; i++){
-                x = q.front();
-                q.pop();
-                x->next = q.front();
-                if(x->left) q.push(x->left);
-                if(x->right) q.push(x->right);
+        Node *curr = root;
+        Node *n = root;
+        while(n->left){
+            curr = n;
+            while(curr){
+                curr->left->next = curr->right;
+                if(curr->next) curr->right->next = curr->next->left;
+                
+                curr = curr->next;
             }
-            x = q.front();
-            x->next = nullptr;
-            q.pop();
-            if(x->left) q.push(x->left);
-            if(x->right) q.push(x->right);
+            n = n->left;
         }
         return root;
     }
