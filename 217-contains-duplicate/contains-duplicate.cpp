@@ -4,8 +4,7 @@ public:
         unordered_set<int> n;
         n.reserve(nums.size());
         for(auto x: nums){
-            if(n.find(x)!=n.end()) return true;
-            n.insert(x);
+            if(!n.insert(x).second) return true;
         }
         return false;
     }
