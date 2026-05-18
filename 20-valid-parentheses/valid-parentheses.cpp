@@ -10,9 +10,7 @@ public:
                 if(check.empty()) return false;
                 char b = check.top();
                 check.pop();
-                if(a == ')' && b != '(') return false;
-                if(a == '}' && b != '{') return false;
-                if(a == ']' && b != '[') return false;
+                if((a == ')' && b != '(') || (a == '}' && b != '{') ||(a == ']' && b != '[')) return false;
         }
         }
         return check.empty();
