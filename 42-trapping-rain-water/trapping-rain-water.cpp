@@ -22,9 +22,3 @@ public:
         return water;
     }
 };
-
-//where there is a gap such that the 
-// 1. CONSTRAINTS: N = ?, Negative values allowed?, Empty inputs possible?
-// 2. BRUTE FORCE CONCEPT: What is the obvious, slowest way to do this?
-// 3. THE BLUEPRINT: Sorted? -> Pointers. History? -> Stack. Lookup? -> Map.
-// 4. INVARIANT: What rule can absolutely NEVER break inside my loops?
