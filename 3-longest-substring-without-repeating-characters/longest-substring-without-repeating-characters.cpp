@@ -9,12 +9,10 @@ public:
             char a = s[i];
             if(m.contains(a) && m[a] >= left){
                 left = m[a] + 1;
-                m[a] = i;
             }
-            else{
-                m[a] = i;
-                length = max(i - left + 1, length);
-            }
+            m[a] = i;
+            length = max(i - left + 1, length);
+
         }
         return length;
     }
