@@ -5,6 +5,7 @@ public:
         int left = 0; 
         int length = 0;
         unordered_map<char, int> m;
+        m.reserve(26);
         for(int i = 0; i < s.length(); i++){
             char a = s[i];
             if(m.contains(a) && m[a] >= left){
