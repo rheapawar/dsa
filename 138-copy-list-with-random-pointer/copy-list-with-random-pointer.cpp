@@ -19,6 +19,7 @@ public:
     Node* copyRandomList(Node* head) {
         if(!head) return nullptr;
         unordered_map<Node*, Node*> map; 
+        map.reserve(1000);
         Node *h = head;     
         while(h){ 
             map[h] = new Node(h->val);
