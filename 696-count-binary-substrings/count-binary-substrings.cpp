@@ -9,11 +9,11 @@ public:
         for(int i = 1; i < s.size(); i++){
             if(s[i] == s[i-1]) curr++;
             else{
+                total += min(curr, prev);
                 prev = curr;
                 curr = 1;
             }
-            if(prev >= curr) total++;
         }
-        return total;
+        return total + min(curr, prev);
     }
 };
