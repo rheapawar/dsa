@@ -21,7 +21,7 @@ this creates O(N) for the thing as opposed to a constant fixed number tho
     }
     
     void add(vector<int> point) {
-        x_vals[point[0]].push_back(point[1]);
+        if(counts[point[0]][point[1]] == 0) x_vals[point[0]].push_back(point[1]);
         counts[point[0]][point[1]]++;
     }
     
@@ -32,12 +32,13 @@ this creates O(N) for the thing as opposed to a constant fixed number tho
         for(int y2 : x_vals[x1]){
             if (y1 == y2) continue;
             else{
+                int count_y2 = counts[x1][y2];
                 int d = abs(y2 - y1);
                 if(x1 - d >= 0){
-                    res += counts[x1 - d][y1] * counts[x1 - d][y2];
+                    res += counts[x1 - d][y1] * counts[x1 - d][y2] * count_y2;
                 }
                 if(point[0] + d < 1001){
-                    res += counts[x1 + d][y1] * counts[x1 + d][y2];
+                    res += counts[x1 + d][y1] * counts[x1 + d][y2] * count_y2;
                 }
             }
         }
