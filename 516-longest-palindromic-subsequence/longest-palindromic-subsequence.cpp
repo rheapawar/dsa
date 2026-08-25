@@ -6,14 +6,16 @@ public:
         create 2d dp, where you have the longest palindrome between any two indices 
         */
         int n = s.length();
-        vector<vector<int>> memo(n, vector<int>(n));
+        vector<int> memo(n);
+        vector<int> prev(n);
         for(int i = n - 1; i>=0; i--){
-            memo[i][i] = 1;
+            memo[i] = 1;
             for(int j = i + 1; j < n; j++){
-                if(s[i] == s[j]) memo[i][j] = 2 + memo[i+1][j-1];
-                else memo[i][j] = max(memo[i+1][j], memo[i][j-1]);
+                if(s[i] == s[j]) memo[j] = 2 + prev[j-1];
+                else memo[j] = max(prev[j], memo[j-1]);
             }
+            prev = memo;
         }
-        return memo[0][n-1];
+        return memo[n-1];
     }
 };
