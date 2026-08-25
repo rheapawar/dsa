@@ -3,16 +3,15 @@ public:
     int numTilings(int n) {
         int MOD = 1'000'000'007;
         if(n <= 2) return n;
-        vector<long> memo(n+1, 0);
-        vector<long> partial(n+1, 0);
-        memo[0] = 1;
-        memo[1] = 1;
-        memo[2] = 2;
-        partial[2] = 1;
+        long prev2 = 1;
+        long prev1 = 2;
+        long partial = 1;
         for(int i = 3; i < n + 1; i++){
-            memo[i] = (memo[i-1] + memo[i-2] + 2*partial[i-1]) % MOD;
-            partial[i] = (partial[i-1] + memo[i-2]);
+            long tmp = prev1;
+            prev1 = (prev1 + prev2 + 2*partial) % MOD;
+            partial = (partial + prev2) % MOD;
+            prev2 = tmp;
         } 
-        return static_cast<int>(memo[n]);
+        return prev1;
     }
 };
