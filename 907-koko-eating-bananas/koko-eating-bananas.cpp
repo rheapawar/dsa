@@ -36,9 +36,7 @@ public:
     bool finished(const vector<int> &piles, int h, int val){
         long long count = 0;
         for(auto pile : piles){
-            int res = pile/val;
-            count += res;
-            if(pile % val != 0) count++;
+            count += (pile + val - 1)/val;
             if(count > h) return false;
         }
         return count <= h;
