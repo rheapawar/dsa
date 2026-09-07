@@ -22,10 +22,9 @@ public:
 
      int right = *max_element(piles.begin(), piles.end());
      int left = 1;
-     int mid;
-
+     
      while(left <= right){
-        mid = left + (right - left)/2;
+        int mid = left + (right - left)/2;
         if(finished(piles, h, mid)) right = mid - 1;
         else left = mid + 1;
      }
