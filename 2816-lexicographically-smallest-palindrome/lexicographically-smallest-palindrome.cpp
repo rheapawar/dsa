@@ -1,12 +1,9 @@
 class Solution {
 public:
     string makeSmallestPalindrome(string s) {
-        int right = s.length()-1;
-        int left = 0;
-        while(left < right){
-            s[left] = s[right] = min(s[left], s[right]);
-            left++;
-            right--;
+        int n = s.length();
+        for(int i = 0; i < n/2; i++){
+            s[i] = s[n - i - 1] = min(s[i], s[n - i - 1]);
         }
         return s;
     }};
