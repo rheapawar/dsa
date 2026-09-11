@@ -6,18 +6,15 @@ public:
         when it reaches count of 3, need to upgrade symbol and switch to left
         
         use hash table?*/
-
-        int nums[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-        string roman[] = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        vector<pair<int, string>> map = {
+            {1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"}, {100, "C"}, {90, "XC"}, {50, "L"}, {40, "XL"}, {10, "X"}, {9, "IX"}, {5, "V"}, {4, "IV"}, {1, "I"}
+        };
         string res;
-
-        int i = 0;
-        while(num > 0){
-            if(num >= nums[i]){
-                num -= nums[i];
-                res += roman[i];
+        for(auto it = map.begin(); it != map.end(); it++){
+            while(num >= it->first){
+                res += it->second;
+                num -= it->first;
             }
-            else i++;
         }
         return res;
     }
