@@ -1,15 +1,9 @@
 class Solution {
 public:
     string makeSmallestPalindrome(string s) {
-        int left = 0;
-        int right = s.length()-1;
-
-        while(left < right){
-            if(s[left] != s[right]){
-                (s[left] - 'a' < s[right] - 'a') ? s[right] = s[left] : s[left] = s[right];
-            }
-            left++;
-            right--;
+        int n = s.length();
+        for(int i = 0; i < n/2; i++){
+            (s[i] - 'a' < s[n - i - 1] - 'a') ? s[n - i - 1] = s[i] : s[i] = s[n - i - 1];
         }
         return s;
     }
