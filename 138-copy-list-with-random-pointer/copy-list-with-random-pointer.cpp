@@ -19,7 +19,8 @@ public:
     Node* copyRandomList(Node* head) {
         /*initial thoughts, when u come across a certain value, check for memory address and whether it has already been mapped to a new node in the new list - if so then point it at that, otherwise insert into hashmap. map from value into vector of pairs of new and old mem addresses?? space overhead tho, are there any alternates?
         
-        cant do vector bc 10^4.
+        cant do vector bc 10^4. 
+        optimization --> do not need the val actually, but then u would need to iterate over the whole map each time
         --*/
         if(!head) return nullptr;
         unordered_map<int, vector<pair<Node*, Node*>>> map;
