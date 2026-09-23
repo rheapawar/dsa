@@ -12,14 +12,20 @@
 class Solution {
 public:
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        if(!root) return !subRoot;
-        return helper(root, subRoot) || isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
-
+        /*would u not want to find the original way to */
+        if(!subRoot) return true;
+        if(!root || !subRoot) return false;
+        if(validate(root, subRoot)) return true;
+        else return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
+         
     }
-    bool helper(TreeNode* root, TreeNode* sub){
-        if(!root && !sub) return true;
-        if(!root || !sub) return false;
-        if(root->val != sub->val) return false;
-        return helper(root->left, sub->left) && helper(root->right, sub->right);
+
+    bool validate(TreeNode* root, TreeNode *subRoot){
+        if(!root && !subRoot) return true;
+        if(!root || !subRoot) return false;
+        if(root->val == subRoot->val){
+            return validate(root->right, subRoot->right) && validate(root->left, subRoot->left);
+        }
+        else return false;
     }
 };
