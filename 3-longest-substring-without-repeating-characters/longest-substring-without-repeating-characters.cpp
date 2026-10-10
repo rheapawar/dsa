@@ -8,20 +8,17 @@ public:
         unordered_map<char, int> map;
         int left = 0;
         for(int i = 0; i < s.length(); i++){
-            if(map[s[i]] != 0){
-                while(left <= i && s[left]!=s[i]){
-                    map[s[left]] = 0;
-                    left++;
-                }
-                left++;
-                best = max(best, streak);
-                streak = i - left + 1;
+            char a = s[i];
+            if(map.contains(a) && map[a] >= left){
+                left = map[a] + 1;
+                map[a] = i;
             }
             else{
-                map[s[i]] = 1;
-                streak++;
+                map[a] = i;
             }
+            streak = i - left + 1;
+            best = max(best, streak);
         }
-        return max(streak, best);
+        return best;
     }
 };
