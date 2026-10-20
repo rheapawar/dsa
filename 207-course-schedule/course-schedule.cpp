@@ -1,35 +1,32 @@
 class Solution {
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        /*would the idea be to build out an adjacency list graph type thing and each time when u are inserting a prereq, check if the other elemnt has that one listed as well, do we need to check for interdependencies 
+        kahns algo, first build adjacnecy list for each element, then check for cycle, toldthat courses are labeled 0 to numCourses -1 and total of numCourses */
         vector<vector<int>> adj(numCourses);
-        for(const auto& x : prerequisites){
-            adj[x[1]].push_back(x[0]);
+        vector<int> inDegree(numCourses, 0);
+        
+        for(const auto &req : prerequisites){
+            adj[req[1]].push_back(req[0]);
+            inDegree[req[0]]++;
         }
 
-        vector<bool> v(numCourses, false);
-        vector<bool> p(numCourses, false);
+        queue<int> q;
+        for(int i = 0; i < numCourses; i++){
+            if(inDegree[i] == 0) q.push(i);
+        }
 
-        for(int i = 0; i < numCourses; ++i){
-            if(!v[i]){
-                if (helper(i, v, p, adj)) return false;
-
+        int visited = 0;
+        while(!q.empty()){
+            int curr = q.front();
+            q.pop();
+            visited++;
+            for(int v : adj[curr]){
+                inDegree[v]--;
+                if(inDegree[v] == 0) q.push(v);
             }
         }
-        return true;
-    }
-
-    bool helper(int i, vector<bool> &v, vector<bool> &p, const vector<vector<int>> &adj){
-        v[i] = true;
-        p[i] = true;
-        for(auto x : adj[i]){
-            if(!v[x]){
-                if(helper(x, v, p, adj)) return true;
-            }
-            else if(p[x]){
-                return true;
-            }
-        }
-        p[i] = false;
-        return false;
+        return visited == numCourses;
+        
     }
 };
