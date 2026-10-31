@@ -4,6 +4,7 @@ public:
         /*when need to avoid duplicates, always sort first and then also */
         vector<vector<int>> res;
         vector<int> curr;
+        curr.reserve(candidates.size());
         sort(candidates.begin(), candidates.end());
         combine(res, curr, candidates, 0, target);
         return res;
