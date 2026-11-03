@@ -8,16 +8,17 @@ public:
         oh choosing where to add according to the rest of the numbers does not matter because the base number initially is the same for the two so u just need to see where adding another will maximize */
 
         
-
+        char a = pattern[0];
+        char b = pattern[1];
         long long first = 0;
         long long second = 0; 
         long long existing = 0;
         for(char c : text){
-            if(pattern[1] == c){
+            if(b == c){
                 existing += first;
                 second++;
             }
-            if(pattern[0] == c)first++;
+            if(a == c)first++;
         }
         
         return existing + max(first, second);
