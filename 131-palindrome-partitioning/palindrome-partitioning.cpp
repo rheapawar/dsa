@@ -4,8 +4,7 @@ public:
 
         vector<vector<string>> res;
         vector<string> curr;
-        string p = "";
-        helper(res, curr, s, p, 0);
+        helper(res, curr, s, 0);
         return res;
     }
             //now consider whether the optimal way to do this is to build forward or build from the center of each
@@ -23,18 +22,17 @@ public:
         //consider the element curr
     /*idea is that if you want to */
 
-        void helper(vector<vector<string>> &res, vector<string> &curr, string &s, string &p, int idx){
+        void helper(vector<vector<string>> &res, vector<string> &curr, string &s, int idx){
             if(idx == s.length()){
                 res.push_back(curr);
                 return;
             }
             
             for(int i = idx; i < s.length(); i++){
-                p.push_back(s[i]);
-                if(isPalindrome(p)){
-                    curr.push_back(p);
-                    string n = "";
-                    helper(res, curr, s, n, i+1);//cut that there and start building a new word
+                string x = s.substr(idx, i - idx + 1);
+                if(isPalindrome(x)){
+                    curr.push_back(x);
+                    helper(res, curr, s, i+1);//cut that there and start building a new word
                     curr.pop_back();
                 }
             }
