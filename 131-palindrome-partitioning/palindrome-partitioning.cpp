@@ -4,6 +4,7 @@ public:
 
         vector<vector<string>> res;
         vector<string> curr;
+        curr.reserve(s.length());
         helper(res, curr, s, 0);
         return res;
     }
