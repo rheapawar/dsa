@@ -11,14 +11,16 @@ public:
     }
     
     int shortest(string word1, string word2) {
+       const vector<int> &one = indices[word1];
+       const vector<int> &two = indices[word2];
        int dist = num_words;
        int smallest = num_words;
        int i = 0;
        int j = 0;
        //handle special case if they are equal to each other
-       while(i < indices[word1].size() && j < indices[word2].size()){
-            dist = abs(indices[word1][i] - indices[word2][j]);
-            if(indices[word1][i] > indices[word2][j]) j++;
+       while(i < one.size() && j < two.size()){
+            dist = abs(one[i] - two[j]);
+            if(one[i] > two[j]) j++;
             else i++;
             smallest = min(smallest, dist);
             
