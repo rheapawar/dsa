@@ -8,20 +8,23 @@ public:
 
         0001111
 
-        okay so 3 white balls, so index 4 to the end, then go thru from beginning and subtract next black from curr black increment to num steps and then icnrement index of next black
+        okay so 3 white balls, so index 4 to the end, then go thru from beginning and subtract next black from curr black increment to num steps and then icnrement index of next black, could instead have it where every time u see a white,
+        
         */
         long long steps = 0;
-        long long white = 0;
+        long long blacks = 0;
         for(int i = 0; i < s.length(); i++){
-            if(s[i] == '0') white++;
+            if(s[i] == '1') blacks++;
+            else steps += blacks;
         }
+        /*
         long long black_idx = white;
         for(int i = 0; i < s.length(); i++){
             if(s[i] == '1' && i < black_idx){ 
                 steps += black_idx - i;
                 black_idx++;
             }
-        }
+        }*/
         return steps;
     }
 };
