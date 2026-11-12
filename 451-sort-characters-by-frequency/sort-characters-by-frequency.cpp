@@ -8,18 +8,17 @@ public:
         int n = s.size();
         vector<string> buckets(n+1);
         for(int i = 0; i < 256; i++){
-            if(counts[i] > 0){
-                int count = counts[i];
-                int idx = counts[i];
-                while(count > 0){
-                    buckets[idx].push_back('0' + i);
-                    count--;
-                }
-            }
+            if(counts[i] > 0) buckets[counts[i]].push_back('0' + i);
         }
         s.clear();
         for(int i = buckets.size()-1; i >= 0; i--){
-            if(buckets[i] != "") s += buckets[i];
+            for(int j = 0; j < buckets[i].size(); j++){
+                int count = i;
+                while(count > 0){
+                    s.push_back(buckets[i][j]);
+                    count--;
+                }
+            }
         }
         return s;
        
