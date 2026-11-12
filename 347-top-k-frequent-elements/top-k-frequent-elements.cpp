@@ -1,33 +1,22 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        /*literally a min pq with a custom comparator to determine ordering based on second element, then iterate over pq at end to hold only, but need to increment the elements - oh go thru, make hashmap, then go thru hashmap, build pq of top k?*/
+        int n = nums.size();
+        /*how to best scale them into buckets, know that there are a total of n elements, need to know the best way to group the index,instead of group by elements, meant to group by frequency instead of needing to maintain pq*/
+        unordered_map<int,int> counts;
+        for(int x : nums) counts[x]++;
 
+        vector<vector<int>> buckets(n+1);
+        for(auto &[val, freq] : counts){
+            buckets[freq].push_back(val);
+        }
 
-        struct Compare{
-            bool operator()(const pair<int,int> a, const pair<int,int> b){
-                return a.second > b.second;
-            }
-        };
-        unordered_map<int,int> map;
-        priority_queue<pair<int,int>, vector<pair<int,int>>, Compare> pq;
         vector<int> res;
-        res.reserve(k);
-
-        for(int n : nums){
-            map[n]++;
-        }
-        for(auto it = map.begin(); it != map.end(); it++){
-            if(pq.size() < k) pq.push(*it);
-            else if(it->second > pq.top().second){
-                pq.pop();
-                pq.push(*it);
+        for(int i = buckets.size()-1; i >= 0 && res.size() < k; i--){
+            for(int v : buckets[i]){
+                res.push_back(v);
+                if(res.size() == k) break;
             }
-        }
-
-        while(!pq.empty()){
-            res.push_back(pq.top().first);
-            pq.pop();
         }
         return res;
     }
