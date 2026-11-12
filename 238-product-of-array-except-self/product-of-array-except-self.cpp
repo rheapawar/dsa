@@ -1,18 +1,24 @@
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
-        vector<int> ans(nums.size());
-        ans[0] = 1;
-        for(int i = 1; i < nums.size(); i++){
-            ans[i] = ans[i-1] * nums[i-1];
+        /*use prefix and postfix products and then multiply one into the other and return that result*/
+        int n = nums.size();
+        vector<int> postfix(n, 1);
+        vector<int> prefix(n, 1);
+        int j = n - 2;
+        for(int i = 1; i < n && j >= 0; i++){
+            prefix[i] = nums[i-1]*prefix[i-1];
+            postfix[j] = nums[j+1]*postfix[j+1];
+            j--;
         }
-        int suffix = 1*nums[nums.size()-1];
-        nums[nums.size()-1] = ans[nums.size()-1];
-        for(int i = nums.size() - 2; i >=0; i--){
-            int next = suffix * nums[i];
-            nums[i] = suffix * ans[i];
-            suffix = next;
+        for(int i = 0; i < prefix.size(); i++){
+            prefix[i] *= postfix[i];
         }
-        return nums;
+        return prefix;
     }
+/*
+    prefix = [1,1,2,6]
+    postfix = [1,12,4,1]
+
+    nums = [1,2,3,4]*/
 };
