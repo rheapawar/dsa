@@ -3,16 +3,14 @@ public:
     vector<int> productExceptSelf(vector<int>& nums) {
         /*use prefix and postfix products and then multiply one into the other and return that result*/
         int n = nums.size();
-        vector<int> postfix(n, 1);
         vector<int> prefix(n, 1);
-        int j = n - 2;
-        for(int i = 1; i < n && j >= 0; i++){
+        for(int i = 1; i < n; i++){
             prefix[i] = nums[i-1]*prefix[i-1];
-            postfix[j] = nums[j+1]*postfix[j+1];
-            j--;
         }
-        for(int i = 0; i < prefix.size(); i++){
-            prefix[i] *= postfix[i];
+        int postfix = 1;
+        for(int i = prefix.size()-1; i >= 0; i--){
+            prefix[i] *= postfix;
+            postfix *= nums[i];
         }
         return prefix;
     }
