@@ -6,7 +6,6 @@ public:
             if(seen.contains(nums[i])) return true;
             seen.insert(nums[i]);
             if(seen.size() > k) seen.erase(nums[i-k]);
-
         }
         return false;
     }
