@@ -1,21 +1,22 @@
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
-        /*as soon as operator is encounterd for two numbers, you can proceed with the actual operation, note: using strings not chars here so cannot use isdigit or - '0', have to use stoi*/
-        stack<int> nums;
-        for(const auto &s : tokens){
+        vector<int> nums;
+        nums.reserve(tokens.size());
+
+        for(string s : tokens){
             if(s == "+" || s == "-" || s == "*" || s == "/"){
-                int num2 = nums.top();
-                nums.pop();
-                int num1 = nums.top();
-                nums.pop();
-                if(s == "+") nums.push(num1 + num2);
-                else if(s == "-") nums.push(num1 - num2);
-                else if(s == "*") nums.push(num1 * num2);
-                else nums.push(num1/num2);
+                int num1 = nums.back();
+                nums.pop_back();
+                int num2 = nums.back();
+                nums.pop_back();
+                if(s == "+") nums.push_back(num1 + num2);
+                else if(s == "-") nums.push_back(num2 - num1);
+                else if(s == "*") nums.push_back(num2 * num1);
+                else if(s == "/") nums.push_back(num2 / num1);
             }
-            else nums.push(stoi(s));
+            else nums.push_back(stoi(s));
         }
-        return nums.top();
+        return nums.back();
     }
 };
