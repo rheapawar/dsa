@@ -8,6 +8,7 @@ public:
         int n = temperatures.size();
         vector<int> res(n, 0);
         vector<pair<int,int>> s;
+        s.reserve(n);
         s.push_back({temperatures[n-1], n-1});
         for(int i = n-2; i >= 0; i--){
             while(!s.empty() && s.back().first <= temperatures[i]){
