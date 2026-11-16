@@ -1,18 +1,17 @@
 class Solution {
 public:
     bool isValid(string s) {
-        stack<char> check;
-        for(char a : s){
-            if( a =='[' || a == '(' || a == '{'){
-                check.push(a);
-            }
+       /*idea is that every open bracket needs a close and the one opened most recently needs to be the first one closed again*/ 
+        stack<char> bracket;
+       for(char p : s){
+            if(p == '(') bracket.push(')');
+            else if(p == '[') bracket.push(']');
+            else if(p == '{') bracket.push('}');
             else{
-                if(check.empty()) return false;
-                char b = check.top();
-                check.pop();
-                if((a == ')' && b != '(') || (a == '}' && b != '{') ||(a == ']' && b != '[')) return false;
+                if(bracket.empty() || p != bracket.top()) return false;
+                bracket.pop();
+            }      
         }
-        }
-        return check.empty();
+        return bracket.empty();
     }
 };
