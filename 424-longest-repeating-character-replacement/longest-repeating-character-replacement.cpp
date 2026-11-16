@@ -9,12 +9,14 @@ public:
         int left = 0;
         int max_freq = 0;
         int longest = 0;
-        unordered_map<char, int> freqs;
+        vector<int> freqs(26);
         for(int i = 0; i < s.length(); i++){
-            freqs[s[i]]++;
-            max_freq = max(max_freq,freqs[s[i]]);
+            int x = s[i] - 'A';
+            freqs[x]++;
+            max_freq = max(max_freq,freqs[x]);
             while(i - left + 1 - max_freq > k){
-                freqs[s[left]]--;
+                int y = s[left] - 'A';
+                freqs[y]--;
                 left++;
             }
             longest = max(longest, i - left + 1);
