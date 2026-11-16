@@ -7,14 +7,14 @@ public:
         */
         int n = temperatures.size();
         vector<int> res(n, 0);
-        stack<pair<int,int>> s;
-        s.push({temperatures[n-1], n-1});
+        vector<pair<int,int>> s;
+        s.push_back({temperatures[n-1], n-1});
         for(int i = n-2; i >= 0; i--){
-            while(!s.empty() && s.top().first <= temperatures[i]){
-                s.pop();
+            while(!s.empty() && s.back().first <= temperatures[i]){
+                s.pop_back();
             }
-            res[i]  = (s.empty()) ? 0 : s.top().second - i;
-            s.push({temperatures[i], i});
+            res[i]  = (s.empty()) ? 0 : s.back().second - i;
+            s.push_back({temperatures[i], i});
         }
         return res;
         //[72,76]
