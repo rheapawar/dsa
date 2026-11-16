@@ -1,26 +1,24 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        /*consider the most frequent letter in a window, and then how many non of those elements are in the current window and if this is <= k then perfect
-        concerns--> how to know the most frequent letter in current window, and when u exceed the number
+        /*need to maintain what is the max frequency element in the window
+        keep a map of the frequency counts that way as we go thru the string, know who is the most frequent, and then keep a left pointer so we know how many non most frequent element there are
+        if it becomes greater than k, then need to go through and decrease the frequencies of eveyrthing we are removing
         
         */
-        vector<int> counts(26, 0);
         int left = 0;
-        int m = 0;
-        int streak = 0;
+        int max_freq = 0;
+        int longest = 0;
+        unordered_map<char, int> freqs;
         for(int i = 0; i < s.length(); i++){
-            int x = s[i] - 'A';
-            counts[x]++;
-            m = max(m, counts[x]);
-
-            if(i - left + 1 - m > k){
-                int y = s[left] - 'A';
-                counts[y]--;
+            freqs[s[i]]++;
+            max_freq = max(max_freq,freqs[s[i]]);
+            while(i - left + 1 - max_freq > k){
+                freqs[s[left]]--;
                 left++;
             }
-            streak = max(streak, i - left + 1);
+            longest = max(longest, i - left + 1);
         }
-        return streak;
+        return longest;
     }
 };
