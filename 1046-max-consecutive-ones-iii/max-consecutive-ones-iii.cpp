@@ -11,11 +11,10 @@ public:
         for(int i = 0; i < nums.size(); i++){
             if(nums[i] == 0){
                 if(first_zero == -1) first_zero = i;
-                if(num_zeroes < k) num_zeroes++;
-                else{
-                    left = first_zero + 1;
-                    auto it = find(nums.begin() + left, nums.end(), 0);
-                    if(it != nums.end()) first_zero = it - nums.begin();
+                num_zeroes++;
+                while(num_zeroes > k){
+                    if(nums[left] == 0) num_zeroes--;
+                    left++;
                 }
             }
             longest = max(longest, i - left + 1);
