@@ -1,18 +1,23 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        istringstream ss(s);
-        vector<string> words;
-        words.reserve(s.length());
-        string word;
+        //if its whitespace keep going otherwise add to result string
 
-        while(ss >> word){
-            words.push_back(word);
-        }
+        int i = s.length()-1;
         string res = "";
-        for(int i = words.size()-1; i >= 0; i--){
-            res += words[i];
-            if(i != 0) res += " ";
+        while(i >= 0){
+            while(i >= 0 && s[i] == ' '){
+                i--;
+            }
+            if(i < 0 ) break;
+            
+            int end = i;
+            while(i >= 0 && s[i] != ' '){
+                i--;
+            }
+            
+            if(!res.empty()) res += " ";
+            res += s.substr(i+1, end - i);
         }
         return res;
     }
