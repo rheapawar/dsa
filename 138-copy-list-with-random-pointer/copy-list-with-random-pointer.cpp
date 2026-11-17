@@ -17,56 +17,52 @@ public:
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
-        /*initial thoughts, when u come across a certain value, check for memory address and whether it has already been mapped to a new node in the new list - if so then point it at that, otherwise insert into hashmap. map from value into vector of pairs of new and old mem addresses?? space overhead tho, are there any alternates?
-        
-        cant do vector bc 10^4. 
-        optimization --> do not need the val actually, but then u would need to iterate over the whole map each time
-        --*/
+        //need to have some way of mapping the new nodes we create with the old ones so that as we create and copy we prevent from needing new one, can have multiple nodes with the same value as well
         if(!head) return nullptr;
-        unordered_map<int, vector<pair<Node*, Node*>>> map;
-        Node *c = new Node{head->val};
-        Node *new_head = c;
-        Node *n;
-        Node *r;
-        map[head->val].push_back({head, c});
+        Node* dummy = new Node(0);
+        Node* c = new Node(head->val);
+        Node* r;
+        Node* n;
+        dummy->next = c;
+
+        unordered_map<int, vector<pair<Node*, Node*>>> m;
+        m[head->val].push_back({head, c});
         while(head){
-            n = nullptr;
             r = nullptr;
-        if(head->next){
-            auto it = map[head->next->val].begin();
-            auto end = map[head->next->val].end();
-            while(it != end){
-                if(head->next == it->first){
-                    n = it->second;
-                    break;
+            n = nullptr;
+            if(head->next){
+                auto v = m[head->next->val];
+                for(auto it = v.begin(); it != v.end(); it++){
+                    if(it->first == head->next){
+                        n = it->second;
+                        break;
+                    }
                 }
-                it++;
-            }
-            if(!n){
-                n = new Node{head->next->val};
-                map[head->next->val].push_back({head->next, n});
-            }
-        }
-        if(head->random){
-            auto it2 = map[head->random->val].begin();
-            auto end2 = map[head->random->val].end();
-            while(it2 != end2){
-                if(head->random == it2->first){
-                    r = it2->second;
-                    break;
+                if(!n){
+                    n = new Node(head->next->val);
+                    m[n->val].push_back({head->next, n});
                 }
-                it2++;
             }
-            if(!r){
-                r = new Node{head->random->val};
-                map[head->random->val].push_back({head->random, r});
+
+            if(head->random){
+                auto v = m[head->random->val];
+                for(auto it = v.begin(); it != v.end(); it++){
+                    if(it->first == head->random){
+                        r = it->second;
+                        break;
+                    }
+                }
+                if(!r){
+                    r = new Node(head->random->val);
+                    m[r->val].push_back({head->random, r});
+                }
             }
-        }
             c->next = n;
             c->random = r;
-            c = n;
+            c = c->next;
             head = head->next;
         }
-        return new_head;
+        return dummy->next;
+
     }
 };
